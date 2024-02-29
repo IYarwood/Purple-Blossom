@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [Header("Gravity")]
     [Tooltip("Maximum downward momentum the player can have due to gravity.")]
     public float maxGravity = 92;
+    public float halfGravity = 45;
 
     [Tooltip("Time taken for downward velocity to go from 0 to the maxGravity.")]
     public float timeToMaxGravity = .6f;
@@ -57,6 +58,10 @@ public class Player : MonoBehaviour
     [Range(0, 1)]
     public float bounciness = .2f;
 
+
+    private bool dead = false;
+
+    private float respawnWaitTime = 2;
     //Movement direction, local to the model holder facing:
     private Vector3 localMovementDirection = Vector3.zero;
 
@@ -93,7 +98,7 @@ public class Player : MonoBehaviour
     [Tooltip("Upward velocity provided on jump.")]
     public float jumpPower = 76;
 
-
+    private bool gravityBool = true;
 
     void Start()
     {
@@ -181,7 +186,15 @@ public class Player : MonoBehaviour
         //While not grounded,
         if (!grounded && yVelocity > -maxGravity)
             //Decrease Y velocity by GravityPerSecond, but don't go under -maxGravity:
-            yVelocity = Mathf.Max(yVelocity - GravityPerSecond * Time.deltaTime, -maxGravity);
+            if (gravityBool == true)
+            {
+                yVelocity = Mathf.Max(yVelocity - GravityPerSecond * Time.deltaTime, -maxGravity);
+            }
+            else
+            {
+                yVelocity = Mathf.Max(yVelocity - (GravityPerSecond/3) * Time.deltaTime, -maxGravity);
+            }
+
     }
 
     void Jumping()
@@ -235,7 +248,10 @@ public class Player : MonoBehaviour
 
         VelocityLoss();
 
+        checkGravity();
+
         Gravity();
+        
 
         Jumping();
 
@@ -243,8 +259,33 @@ public class Player : MonoBehaviour
     }
 
 
-    void Die()
+    public void Die()
     {
+        if (!dead)
+        {
+            dead = true;
+            Invoke("Respawn", respawnWaitTime);
+            enabled = false;
+            charController.enabled = false;
+            modelHolder.gameObject.SetActive(false);
+        }
+    }
+
+    public void Respawn()
+    {
+        dead = false;
         trans.position = spawnPoint;
+        
+        enabled = true;
+        charController.enabled = true;
+        modelHolder.gameObject.SetActive(true);
+    }
+
+    private void checkGravity()
+    {
+        if (Input.GetKey(KeyCode.J))
+        {
+            gravityBool = !gravityBool;
+        }
     }
 }

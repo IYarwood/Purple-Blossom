@@ -27,6 +27,10 @@ public class TestingPlayerScript : MonoBehaviour
 
     bool grounded = true;
 
+    public bool hasBoots;
+    public bool hasScroll;
+    public bool hasVortex;
+
     enum CharStates
     {
         idle = 0,
@@ -112,7 +116,7 @@ public class TestingPlayerScript : MonoBehaviour
         Vector3 movement = transform.TransformDirection(movementDir) * moveSpeed * Time.deltaTime;
         rb.MovePosition(rb.position + movement);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && hasBoots == true)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             rb.constraints = RigidbodyConstraints.None;

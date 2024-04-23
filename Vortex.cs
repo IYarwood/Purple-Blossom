@@ -18,7 +18,8 @@ public class Vortex : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        var script = gameObject.GetComponent<TestingPlayerScript>();
+        if (Input.GetKeyDown(KeyCode.L) && script.hasVortex == true)
         {
             if (state == true)
             {

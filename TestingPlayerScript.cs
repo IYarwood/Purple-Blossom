@@ -145,7 +145,7 @@ public class TestingPlayerScript : MonoBehaviour
             Invoke("Respawn", respawnWaitTime);
             enabled = false;
             //rb.enabled = false;
-            //modelHolder.gameObject.SetActive(false);
+            modelHolder.gameObject.SetActive(false);
         }
     }
 
@@ -156,6 +156,6 @@ public class TestingPlayerScript : MonoBehaviour
 
         enabled = true;
         //rb.enabled = true;
-        //modelHolder.gameObject.SetActive(true);
+        modelHolder.gameObject.SetActive(true);
     }
 }

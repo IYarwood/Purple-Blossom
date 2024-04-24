@@ -23,7 +23,7 @@ public class HazardCollision : MonoBehaviour
         //8 is the layer number of the player
         if (other.gameObject.layer == 8 && hazardScript.active == false)
         {
-            Player player = other.GetComponent<Player>();
+            var player = other.GetComponent<TestingPlayerScript>();
             if (player != null)
             {
                 player.Die();

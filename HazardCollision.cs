@@ -18,8 +18,10 @@ public class HazardCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        var script = other.gameObject.GetComponent<TestingPlayerScript>();
+        var hazardScript = other.gameObject.GetComponent<Vortex>();
         //8 is the layer number of the player
-        if (other.gameObject.layer == 8)
+        if (other.gameObject.layer == 8 && hazardScript.active == false)
         {
             Player player = other.GetComponent<Player>();
             if (player != null)

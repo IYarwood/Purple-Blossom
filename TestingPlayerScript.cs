@@ -112,7 +112,8 @@ public class TestingPlayerScript : MonoBehaviour
         {
             animator.SetInteger(animationState, (int)CharStates.run);
         }
-        movementDir = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+        //movementDir = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+        movementDir = new Vector3(horizontalInput, 0f, 1.0f).normalized;
         Vector3 movement = transform.TransformDirection(movementDir) * moveSpeed * Time.deltaTime;
         rb.MovePosition(rb.position + movement);
 

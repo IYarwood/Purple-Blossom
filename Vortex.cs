@@ -9,6 +9,8 @@ public class Vortex : MonoBehaviour
     public GameObject secondaryModel;
     private bool state = true;
 
+    public bool active = false;
+
     private float timeSinceActivation;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,7 @@ public class Vortex : MonoBehaviour
             {
                 model.SetActive(false);
                 state = false;
+                active = true;
                 secondaryModel.SetActive(true);
                 timeSinceActivation = Time.time;
             }
@@ -35,6 +38,7 @@ public class Vortex : MonoBehaviour
             model.SetActive(true);
             secondaryModel.SetActive(false);
             state = true;
+            active = false;
         }
         
 

@@ -25,12 +25,13 @@ public class TestingPlayerScript : MonoBehaviour
     Animator animator;
     string animationState = "AnimationState";
 
-    bool grounded = true;
+    public bool grounded = true;
 
     public bool hasBoots;
     public bool hasScroll;
     public bool hasVortex;
 
+    
     enum CharStates
     {
         idle = 0,
@@ -73,40 +74,11 @@ public class TestingPlayerScript : MonoBehaviour
         if (horizontalInput > 0 && grounded == true)
         {
             animator.SetInteger(animationState, (int)CharStates.right);
-            //modelHolder.eulerAngles.y = 30;
-
-            //modelHolder.Rotate(0, 30, 0);
-            // Smoothly tilts a transform towards a target rotation.
-            /*
-            float smooth = 5.0f;
-            float tiltAngle = 30.0f;
-            float tiltAroundY = Input.GetAxis("Horizontal") * tiltAngle;
-            float tiltAroundX = Input.GetAxis("Vertical") * tiltAngle;
-            // Rotate the cube by converting the angles into a quaternion.
-            Quaternion target = Quaternion.Euler(0, tiltAroundY, 0);
-
-            // Dampen towards the target rotation
-            modelHolder.rotation = Quaternion.Slerp(modelHolder.rotation, target, Time.deltaTime * smooth);
-            */
+            
         }
         else if (horizontalInput < 0 && grounded == true)
         {
             animator.SetInteger(animationState, (int)CharStates.left);
-        }
-        else if (verticalInput > 0 || verticalInput < 0 && grounded == true)
-        {
-            /*
-            float smooth = 5.0f;
-            float tiltAngle = 30.0f;
-            float tiltAroundY = Input.GetAxis("Horizontal") * tiltAngle;
-            float tiltAroundX = Input.GetAxis("Vertical") * tiltAngle;
-            // Rotate the cube by converting the angles into a quaternion.
-            Quaternion target = Quaternion.Euler(0, 0, 0);
-
-            // Dampen towards the target rotation
-            modelHolder.rotation = Quaternion.Slerp(modelHolder.rotation, target, Time.deltaTime * smooth);
-            */
-            //animator.SetInteger(animationState, (int)CharStates.run);
         }
         else if (grounded == true)
         {
@@ -117,7 +89,7 @@ public class TestingPlayerScript : MonoBehaviour
         Vector3 movement = transform.TransformDirection(movementDir) * moveSpeed * Time.deltaTime;
         rb.MovePosition(rb.position + movement);
 
-        if (Input.GetKeyDown(KeyCode.Space) && hasBoots == true)
+        if (Input.GetKeyDown(KeyCode.Space) && hasBoots == true && grounded == true)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             rb.constraints = RigidbodyConstraints.None;
@@ -144,7 +116,6 @@ public class TestingPlayerScript : MonoBehaviour
             dead = true;
             Invoke("Respawn", respawnWaitTime);
             enabled = false;
-            //rb.enabled = false;
             modelHolder.gameObject.SetActive(false);
         }
     }
@@ -155,7 +126,6 @@ public class TestingPlayerScript : MonoBehaviour
         trans.position = spawnPoint;
 
         enabled = true;
-        //rb.enabled = true;
         modelHolder.gameObject.SetActive(true);
     }
 }

@@ -25,6 +25,7 @@ public class Wall : MonoBehaviour
             Debug.Log(other.gameObject.name + " hit the Wall");
             rb = other.gameObject.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            script.grounded = true;
         }
     }
 }
